@@ -8,5 +8,5 @@ document.addEventListener('DOMContentLoaded',async ()=>{
     let data_latest = await response_latest.json()
     let response_latestdata = await fetch(`https://api.github.com/repos/samTime101/${data_latest['0']['name']}/commits`)
     let data_latestdata =  await response_latestdata.json()
-    document.querySelector('#latest').innerText = `${data_latest['0']['name']} ${data_latestdata['0']['commit']['message']} ${data_latestdata['0']['commit']['committer']['date']}`
+    document.querySelector('#latest').innerText = `Repo: ${data_latest['0']['name']}\ncommit_msg: "${data_latestdata['0']['commit']['message']}"\nDate: ${data_latestdata['0']['commit']['committer']['date']}`
 })
