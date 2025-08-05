@@ -1,28 +1,47 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Samip Regmi</title>
-  <link rel="stylesheet" href="./css/styles.css">
+  <title>Samip's Blog</title>
 </head>
 <body>
-<h1>Welcome , I am SamTime101</h1>
-<p>I like coding</p>
-<p>Blogs</p>
-<ul>
-  <li id="blog1">blog1</li>
-</ul>
-<p>pages</p>
-<ul>
-  <li id="git">git</li>
-  <li>screensaver</li>
-</ul>
-<div id="blog_content"></div>
-<div id="page_content"></div>
-<footer>Samip Regmi | samTime101</footer>
+  <h1>Blog paradise</h1>
 
+  <ul id="titles"></ul>
+  <hr>
+  <h2 id="content-title"></h2>
+  <div id="content-body" style="white-space: pre-wrap;"></div>
+
+  <script>
+    fetch("http://samip.pythonanywhere.com/space/myblogs/")
+      .then(res => res.json())
+      .then(data => {
+        data.folder.forEach(title => {
+          const li = document.createElement('li');
+          const a = document.createElement('a');
+          a.href = "#";
+          a.textContent = title;
+          a.onclick = () => load(title);
+          li.appendChild(a);
+          document.getElementById('titles').appendChild(li);
+        });
+      });
+
+    function load(title_data) {
+      fetch("http://samip.pythonanywhere.com/space/myblogs/" + title_data)
+        .then(res => res.json())
+        .then(data => {
+          const f = data.file;
+          if (f.includes('<')) {
+            const temp = document.createElement('div');
+            temp.innerHTML = f;
+            document.getElementById('content-title').textContent = temp.querySelector('h2')?.textContent || title_data;
+            document.getElementById('content-body').innerHTML = temp.querySelector('p')?.innerHTML || "";
+          } else {
+            document.getElementById('content-title').textContent = title_data;
+            document.getElementById('content-body').textContent = f;
+          }
+        });
+    }
+  </script>
 </body>
-<script src="./js/index.js"></script>
 </html>
