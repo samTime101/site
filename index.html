@@ -12,7 +12,7 @@
   <div id="content-body" style="white-space: pre-wrap;"></div>
 
   <script>
-    fetch("http://samip.pythonanywhere.com/space/myblogs/")
+    fetch("https://samip.pythonanywhere.com/space/myblogs/")
       .then(res => res.json())
       .then(data => {
         data.folder.forEach(title => {
@@ -27,7 +27,7 @@
       });
 
     function load(title_data) {
-      fetch("http://samip.pythonanywhere.com/space/myblogs/" + title_data)
+      fetch("https://samip.pythonanywhere.com/space/myblogs/" + title_data)
         .then(res => res.json())
         .then(data => {
           const f = data.file;
